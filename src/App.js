@@ -13,6 +13,7 @@ import {
   Link,
   Text,
 } from "./styledComponents";
+import axios from "axios";
 
 const api = {
   key: "65ebeea7cb3a599956de8e3cda2ea7d0",
@@ -26,12 +27,11 @@ const App = () => {
   const search = async (e) => {
     if (e.key === "Enter") {
       try {
-        await fetch(
+        await axios.get(
           `${api.base}weather?q=${query}&units=metric&APPID=${api.key}`
         )
-          .then((res) => res.json())
           .then((result) => {
-            setWeather(result);
+            setWeather(result.data);
             setQuery("");
           });
       } catch (error) {
