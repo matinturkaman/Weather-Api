@@ -23,14 +23,20 @@ const App = () => {
   const [query, setQuery] = useState("");
   const [weather, setWeather] = useState({});
 
-  const search = (e) => {
+  const search = async (e) => {
     if (e.key === "Enter") {
-      fetch(`${api.base}weather?q=${query}&units=metric&APPID=${api.key}`)
-        .then((res) => res.json())
-        .then((result) => {
-          setWeather(result);
-          setQuery("");
-        });
+      try {
+        await fetch(
+          `${api.base}weather?q=${query}&units=metric&APPID=${api.key}`
+        )
+          .then((res) => res.json())
+          .then((result) => {
+            setWeather(result);
+            setQuery("");
+          });
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
